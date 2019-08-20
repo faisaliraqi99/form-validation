@@ -16,10 +16,7 @@ function eventHandleToData(commingEvent){
   let data = { value: commingEvent.target.value, class: commingEvent.target.className}
   switch(data.class) {
     case 'name':
-      // let regex = /^[a-zA-Z0-9@]+$/;
-      data.value = data.value.replace(/[^a-zA-Z0-9@]+/, '');
       Data.newName = data.value
-      console.log(data.value)
     break;
     case 'surname':
       Data.newSurName = data.value
@@ -37,11 +34,19 @@ function eventHandleToData(commingEvent){
       console.log('Error', data)
     break;
   }
-
+  console.log(Data);
 }
 
-name.addEventListener('input', (event) => eventHandleToData(event));
-surName.addEventListener('input', (event) => eventHandleToData(event));
-email.addEventListener('input', (event) => eventHandleToData(event));
+name.addEventListener('input', (event) => {
+  event.target.value = event.target.value.replace(/[^a-zA-Z@]+/, '');
+  eventHandleToData(event);
+});
+surName.addEventListener('input', (event) => {
+  event.target.value = event.target.value.replace(/[^a-zA-Z@]+/, '');
+  eventHandleToData(event)
+});
+email.addEventListener('input', (event) => {
+  eventHandleToData(event)
+});
 phone.addEventListener('input', (event) => eventHandleToData(event));
 password.addEventListener('input', (event) => eventHandleToData(event));
