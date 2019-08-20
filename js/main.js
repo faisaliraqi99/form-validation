@@ -12,23 +12,60 @@ let Data = {
   newPassword: ''
 }
 
+function ValidateEmail(mail) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+    email.style.borderColor = "#b9ea43";
+    return true;
+  }
+  email.style.borderColor = "#ea4343";
+  return false
+}
+
+function ValidatePhone(phoneNum) {
+  if (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phoneNum)) {
+    phone.style.borderColor = "#b9ea43";
+    return true;
+  }
+  phone.style.borderColor = "#ea4343";
+  return false;
+}
+
+function ValidatePassword(password) {
+  if(password.length >= 8) {
+    return true;
+  }
+  return false;
+}
+
 function eventHandleToData(commingEvent){
   let data = { value: commingEvent.target.value, class: commingEvent.target.className}
   switch(data.class) {
     case 'name':
-      Data.newName = data.value
+      Data.newName = data.value.toLowerCase();
     break;
     case 'surname':
-      Data.newSurName = data.value
+      Data.newSurName = data.value.toLowerCase();
     break;
     case 'email':
-      Data.newEmail = data.value
+      if(ValidateEmail(data.value.toLowerCase())) {
+        Data.newEmail = data.value.toLowerCase();
+      } else {
+        Data.newEmail = '';
+      }
     break;
     case 'phone':
-      Data.newPhone = data.value
+      if(ValidatePhone(data.value)) {
+        Data.newPhone = data.value;
+      } else {
+        Data.newPhone = '';
+      }
     break;
     case 'password':
-      Data.newPassword = data.value
+      if(ValidatePassword(data.value)) {
+        Data.newPassword = data.value
+      } else {
+        Data.newPassword = '';
+      }
     break;
     default:
       console.log('Error', data)
